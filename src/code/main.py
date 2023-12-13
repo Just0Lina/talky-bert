@@ -21,7 +21,10 @@ class CommandRecognizer:
             errors_new = 1 - util.cos_sim(embedding_new, center)
             if errors_new <= maxerr:
                 maxerr = errors_new
-                command = row[-1]
+                if errors_new >= 0.2 and command == "result['command']": 
+                 command = -1
+                elif errors_new < 0.2:
+                  command = row[-1]
 
         print(f"Time taken for recognition: {time.time() - start_time} seconds")
         print(sent, command)
@@ -44,3 +47,6 @@ recognizer = CommandRecognizer()
 print(recognizer.recognize_command("Включи тайме"))
 print(recognizer.recognize_command("Перезапусти"))
 print(recognizer.recognize_command("Назад хочу"))
+print(recognizer.recognize_command("Спой песню"))
+print(recognizer.recognize_command("Свари ддля меня пельмени"))
+
